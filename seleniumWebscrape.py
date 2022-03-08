@@ -2,7 +2,7 @@ import requests
 import pandas as pd
 import json
 from bs4 import BeautifulSoup
-from Housing.SinglePage import SinglePage
+from SinglePage import SinglePage
 from tqdm import tqdm
 
 from selenium import webdriver
@@ -21,14 +21,14 @@ headers = {
     'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
 }
 
-driver = webdriver.Chrome('/Users/jasontruong/Downloads/Learn/chromedriver')
+driver = webdriver.Chrome('/Users/jasontruong/Downloads/Learn/Rental/Housing/chromedriver')
 base_url = 'https://www.remax.ca/ab/edmonton-real-estate?v=1&page='
 test_list = []
 for m in range(1,2):
     siteurl = base_url + str(m)
     driver.get(siteurl)
 
-    websites = driver.find_elements_by_xpath('//a[@class="listing-card_listingCard__3SoUb"]')
+    websites = driver.find_elements_by_xpath('//a[@class="listing-card_listingCard__G6M8g"]')
 
     for i in websites:
         test_list.append(i.get_attribute("href"))
