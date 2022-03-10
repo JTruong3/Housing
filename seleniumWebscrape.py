@@ -22,7 +22,7 @@ headers = {
 }
 
 driver = webdriver.Chrome('/Users/jasontruong/Downloads/Learn/Rental/Housing/chromedriver')
-base_url = 'https://www.remax.ca/ab/edmonton-real-estate?v=1&page='
+base_url = 'https://www.remax.ca/on/toronto-real-estate?pageNumber='
 test_list = []
 for m in range(1,2):
     siteurl = base_url + str(m)
@@ -41,9 +41,9 @@ for i in tqdm(test_list):
     list_1.append(pageInfo)
     
 dataTable = pd.DataFrame(list_1)
-dataTable["Estimated Monthly Mortgage Payment"] = dataTable["Estimated Monthly Mortgage Payment"].replace('Est. Payment: ', '', regex=True).replace(' monthly', '', regex=True)
+dataTable["Estimated Monthly Mortgage Payment ($)"] = dataTable["Estimated Monthly Mortgage Payment ($)"].replace('Est. Payment: ', '', regex=True).replace(' monthly', '', regex=True)
 dataTable['Link'] = test_list
-dataTable.to_csv("ProjectRental_Edmonton.csv")
+dataTable.to_csv("ProjectRental_Toronto.csv")
 
 
 driver.close
