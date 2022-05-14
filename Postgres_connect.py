@@ -1,5 +1,7 @@
+from datetime import date
 from re import ASCII
 import psycopg2
+import pandas as pd
 
 try:
     connection = psycopg2.connect(
@@ -38,7 +40,24 @@ create_table_query = '''CREATE TABLE HOUSE_DATA
                         Link VARCHAR(255));
             '''
 
-cursor.execute()
+cursor.execute(create_table_query)
+connection.commit()
+
+house_list = pd.load_csv("sample.csv")
+for ind in house_list.index:
+    insert_placeholder = 'INSERT INTO house_data VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);'
+    address = house_list['Address'][ind]
+    description = str(ind)
+    laundry = house_list['Laundry'][ind]
+    price = int(house_list['Price'][ind])
+    beds = house_list['Beds'][ind]
+    baths = house_list['Baths'][ind]
+    date_listed = house_list['Date Listed'][ind]
+    property_type = house_list['Property Type'][ind]
+    monthly_mortgage = house_list['Estimated Monthly Mortgage Payment ($)'][ind]
+    lnk = house_list['Link'][ind]
+    cursor.execute(insert_placeholder, (address,description,laundry,price,beds,baths, date_listed,property_type,monthly_mortgage,lnk))
+
 
 
 
@@ -48,3 +67,10 @@ connection.close()
 #cursor.execute(ck_table)
 
 # /Applications/Postgres.app/Contents/Versions/14/bin/psql -p5432 "jasontruong"
+
+# test_case2 = "INSERT INTO test VALUES (%s,%s);"
+# cursor.execute(test_case2,(item))
+# connection.commit()
+# test_case = "SELECT * FROM test"
+# cursor.execute(test_case)
+# cursor.fetchall()
