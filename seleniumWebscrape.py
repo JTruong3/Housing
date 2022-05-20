@@ -1,12 +1,8 @@
-import requests
 import pandas as pd
-import json
-from bs4 import BeautifulSoup
-from SinglePage import SinglePage
+from single_page import SinglePage
 from tqdm import tqdm
 
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 
 headers = {
     'authority': 'remax.com',
@@ -29,8 +25,8 @@ j = 1
 while len(test_list) <= 15:
 
     for m in range(i,j):
-        siteurl = base_url + str(m)
-        driver.get(siteurl)
+        site_url = base_url + str(m)
+        driver.get(site_url)
 
         # List of elements for websites
         websites = driver.find_elements_by_xpath('//a[@class="listing-card_listingCard__G6M8g"]')
@@ -52,17 +48,17 @@ while len(test_list) <= 15:
 list_1 = []
 for i in tqdm(test_list):
 
-    pageInfo = SinglePage(i,headers)
+    page_info = SinglePage(i,headers)
 
-    list_1.append(pageInfo)
+    list_1.append(page_info)
     
-dataTable = pd.DataFrame(list_1)
-dataTable["Estimated Monthly Mortgage Payment ($)"] = dataTable["Estimated Monthly Mortgage Payment ($)"].replace('Est. Payment: ', '', regex=True).replace(' monthly', '', regex=True)
-numCols = ['Price','Estimated Monthly Mortgage Payment ($)']
-dataTable[numCols] = dataTable[numCols].replace(',','',regex = True)
-dataTable[numCols] = dataTable[numCols].replace("\$",'',regex = True)
-dataTable['Link'] = test_list
-dataTable.to_csv("ProjectRental_may19m.csv")
+data_table = pd.DataFrame(list_1)
+data_table["Estimated Monthly Mortgage Payment ($)"] = data_table["Estimated Monthly Mortgage Payment ($)"].replace('Est. Payment: ', '', regex=True).replace(' monthly', '', regex=True)
+num_cols = ['Price','Estimated Monthly Mortgage Payment ($)']
+data_table[num_cols] = data_table[num_cols].replace(',','',regex = True)
+data_table[num_cols] = data_table[num_cols].replace("\$",'',regex = True)
+data_table['Link'] = test_list
+data_table.to_csv("ProjectRental_may19m.csv")
 
 
 driver.close

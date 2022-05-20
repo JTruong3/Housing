@@ -2,7 +2,7 @@ import requests
 import pandas as pd
 import json
 from bs4 import BeautifulSoup
-from SinglePage import SinglePage
+from single_page import SinglePage
 
 headers = {
     'authority': 'zillow.com',
