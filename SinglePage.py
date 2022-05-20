@@ -9,10 +9,17 @@ def SinglePage(prop_link,headers):
 
     d_set = {}
     try:
-        d_set["Address"] = soup.find("span",{"class","listing-address_splitLines__pLZIy"}).text + " , " + soup.find("span",{"class","listing-summary_cityLine__YxXgL listing-address_splitLines__pLZIy"}).text
+        d_set["Address"] = soup.find("span",{"class","listing-address_splitLines__pLZIy"}).text
         
     except:
         d_set["Address"] = None
+
+
+    try:
+        d_set["Location"],d_set["Province"],d_set["Postal Code"] = soup.find("span",{"class","listing-summary_cityLine__YxXgL listing-address_splitLines__pLZIy"}).text.split(',')
+
+    except:
+        d_set["Location"],d_set["Province"],d_set["Postal Code"] = None
 
     try:
         d_set["Description"] = soup.find('p').getText()
