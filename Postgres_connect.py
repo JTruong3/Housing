@@ -43,7 +43,7 @@ create_table_query = '''CREATE TABLE HOUSE_DATA
 cursor.execute(create_table_query)
 connection.commit()
 
-house_list = pd.load_csv("sample.csv")
+house_list = pd.read_csv("sample.csv")
 for ind in house_list.index:
     insert_placeholder = 'INSERT INTO house_data VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);'
     address = house_list['Address'][ind]
