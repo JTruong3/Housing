@@ -1,7 +1,7 @@
 import pandas as pd
 from single_page import SinglePage
 from tqdm import tqdm
-
+from utils import data_transform
 from selenium import webdriver
 
 headers = {
@@ -19,10 +19,12 @@ headers = {
 
 driver = webdriver.Chrome('/Users/jasontruong/Downloads/Learn/Rental/Housing/chromedriver')
 base_url = 'https://www.remax.ca/on/markham-real-estate?pageNumber='
-test_list = []
+d_links = [] # List of real estate links
+d_list = [] # Data for different real estate homes
 i = 0
 j = 1
-while len(test_list) <= 15:
+
+while len(d_links) <= 15:
 
     for m in range(i,j):
         site_url = base_url + str(m)
@@ -41,24 +43,20 @@ while len(test_list) <= 15:
             
             # Removes rental properties
             if h_price > 25000:
-                test_list.append(i_sites.get_attribute("href"))
+                d_links.append(i_sites.get_attribute("href"))
     i += 1
     j += 1
 
-list_1 = []
-for i in tqdm(test_list):
+
+# Webscrape through the different links to populate data into a list
+for i in tqdm(d_links):
 
     page_info = SinglePage(i,headers)
-
-    list_1.append(page_info)
+    d_list.append(page_info)
     
-data_table = pd.DataFrame(list_1)
-data_table["Estimated Monthly Mortgage Payment ($)"] = data_table["Estimated Monthly Mortgage Payment ($)"].replace('Est. Payment: ', '', regex=True).replace(' monthly', '', regex=True)
-num_cols = ['Price','Estimated Monthly Mortgage Payment ($)']
-data_table[num_cols] = data_table[num_cols].replace(',','',regex = True)
-data_table[num_cols] = data_table[num_cols].replace("\$",'',regex = True)
-data_table['Link'] = test_list
-data_table.to_csv("ProjectRental_may19m.csv")
+# Dataframe transformations
+data_table = data_transform(d_list,d_links)
+data_table.to_csv("ProjectRental_may20m.csv")
 
 
 driver.close

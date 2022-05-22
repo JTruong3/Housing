@@ -74,3 +74,6 @@ connection.close()
 # test_case = "SELECT * FROM test"
 # cursor.execute(test_case)
 # cursor.fetchall()
+
+
+#https://stackoverflow.com/questions/23103962/how-to-write-dataframe-to-postgres-table
