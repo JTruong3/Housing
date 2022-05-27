@@ -3,6 +3,7 @@ from single_page import SinglePage
 from tqdm import tqdm
 from utils import data_transform
 from selenium import webdriver
+from datetime import date
 
 headers = {
     'authority': 'remax.com',
@@ -23,7 +24,7 @@ d_links = [] # List of real estate links
 d_list = [] # Data for different real estate homes
 i = 0
 j = 1
-
+day_var = date.today().strftime('%Y-%m-%d')
 while len(d_links) <= 15:
 
     for m in range(i,j):
@@ -56,7 +57,7 @@ for i in tqdm(d_links):
     
 # Dataframe transformations
 data_table = data_transform(d_list,d_links)
-data_table.to_csv("ProjectRental_may20m.csv")
+data_table.to_csv("/Users/jasontruong/Downloads/Learn/Rental/Housing/airflow/HouseData_{}.csv".format(day_var))
 
 
 driver.close
@@ -64,4 +65,5 @@ driver.close
 # https://www.ratehub.ca/mortgage-affordability-calculator
 
 # https://www.remax.ca/on/toronto-real-estate/215-151-dan-leckie-way-wp_id301136190-lst
+
 

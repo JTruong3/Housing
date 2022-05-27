@@ -16,10 +16,10 @@ default_args = {
 dag = DAG('housing_data_dag',
             default_args= default_args,
             description = 'Housing data extraction pipeline',
-            schedule_interval = dt.timedelta(days = 1),)
+            schedule_interval = dt.timedelta(days = 14),)
 
 t1 = BashOperator(
-    task_id = 't1',
+    task_id = 'initial webscrape of housing data',
     bash_command = 'python3 /Users/jasontruong/Downloads/Learn/Rental/Housing/webscrape/seleniumWebscrape.py',
     dag = dag
 )
@@ -29,6 +29,17 @@ t2 = BashOperator(
     bash_command = 'echo "yes"',
     dag = dag
 )
+# t3 = BashOperator(
+#     task_id = 't2',
+#     bash_command = 'echo "yes"',
+#     dag = dag
+# )
+# t4 = BashOperator(
+#     task_id = 't2',
+#     bash_command = 'echo "yes"',
+#     dag = dag
+# )
+
 
 t1 >> t2
 

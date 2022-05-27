@@ -1,0 +1,12 @@
+airflow/*
+house_data/*
+venv/*
+__pycache__/*
+.vscode/*
+
+
+chromedriver
+cookies_data_for_sold.txt
+*.csv
+.DS_Store
+Notes.py
