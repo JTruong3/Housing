@@ -1,4 +1,5 @@
 import pandas as pd
+from sqlalchemy import false
 from single_page import SinglePage
 from tqdm import tqdm
 from utils import data_transform
@@ -25,7 +26,7 @@ d_list = [] # Data for different real estate homes
 i = 0
 j = 1
 day_var = date.today().strftime('%Y-%m-%d')
-while len(d_links) <= 15:
+while len(d_links) <= 100:
 
     for m in range(i,j):
         site_url = base_url + str(m)
@@ -41,10 +42,10 @@ while len(d_links) <= 15:
         for idx,i_sites in enumerate(websites):
 
             h_price = int(p_list[idx].text.replace('$','').replace(',',''))
-            
+            if i_sites.get_attribute("href") not in d_links:
             # Removes rental properties
-            if h_price > 25000:
-                d_links.append(i_sites.get_attribute("href"))
+                if h_price > 25000:
+                    d_links.append(i_sites.get_attribute("href"))
     i += 1
     j += 1
 
@@ -57,7 +58,7 @@ for i in tqdm(d_links):
     
 # Dataframe transformations
 data_table = data_transform(d_list,d_links)
-data_table.to_csv("/Users/jasontruong/Downloads/Learn/Rental/Housing/airflow/HouseData_{}.csv".format(day_var))
+data_table.to_csv("/Users/jasontruong/Downloads/Learn/Rental/Housing/house_data/HouseData_{}.csv".format(day_var), index = False)
 
 
 driver.close

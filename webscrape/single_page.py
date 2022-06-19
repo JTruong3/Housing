@@ -52,7 +52,7 @@ def SinglePage(prop_link,headers):
 
     ### Property Details
     try:
-        prop_features = soup.findAll("ul",{"class":"bullet-section_residentialBulletPointContainer__ox7JW"})[0]
+        prop_features = soup.find("ul",{"class":"bullet-section_bulletPointContainer__10cvc residentialDarkColour"})
     except:
         prop_features = False
     
@@ -63,21 +63,21 @@ def SinglePage(prop_link,headers):
         #     d_set["Property Tax"] = None
 
         try:
-            d_set["Date Listed"] = prop_features.findAll("li",{"class","bullet-section_bulletPointRow__4pBp6 listing-detail-bullet-section_propertyDetailsBullet__EevAP"})[3].text#
+            d_set["Date Listed"] = prop_features.find_all("li",{"class","bullet-section_bulletPointRow__4pBp6 listing-detail-bullet-section_propertyDetailsBullet__EevAP"})[3].text#
         except:
             d_set["Date Listed"] = None
 
     # Home Features
-    try:
-        home_features = soup.findAll("ul",{"class":"bullet-section_residentialBulletPointContainer__ox7JW"})[1]
-    except:
-        home_features = False
+    # try:
+    #     home_features = soup.findAll("ul",{"class":"bullet-section_residentialBulletPointContainer__ox7JW"})[1]
+    # except:
+    #     home_features = False
     
-    if home_features != False:
-        try:
-            d_set["Property Type"] = home_features.findAll("li",{"class","bullet-section_bulletPointRow__4pBp6"})[0].text#
-        except:
-            d_set["Property Type"] = None
+    # if home_features != False:
+    #     try:
+    #         d_set["Property Type"] = home_features.findAll("li",{"class","bullet-section_bulletPointRow__4pBp6"})[0].text#
+    #     except:
+    #         d_set["Property Type"] = None
 
     # try:
     #     d_set["Property Type"] = soup.find_all("span",{"class":"listing-summary_propertyDetailValue__UOUcR"})[3].text#
