@@ -10,3 +10,4 @@ cookies_data_for_sold.txt
 *.csv
 .DS_Store
 Notes.py
+API_Codes.py

@@ -3,6 +3,8 @@ Web scrape housing data
 
 Ensure Chromedriver version is compatible with current google chrome browser
 
+Check sample.csv for a sample of the webscrapped housing data.
+
 **Data pipeline:**
 
 Automate scrapping process.
